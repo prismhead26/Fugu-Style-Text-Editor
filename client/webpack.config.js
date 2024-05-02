@@ -13,6 +13,9 @@ module.exports = () => {
       main: './src/js/index.js',
       install: './src/js/install.js'
     },
+    // stats: {
+    //   children: true,
+    // },
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
@@ -23,7 +26,7 @@ module.exports = () => {
         swDest:'src-sw.js',
       }),
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: path.resolve(__dirname, 'index.html'),
         title: 'J.A.T.E. PWA',
       }),
       new WebpackPwaManifest({
@@ -34,11 +37,12 @@ module.exports = () => {
         description: 'Text Editor PWA',
         background_color: '#ffffff',
         theme_color: '#2196f3',
-        start_url: '/',
-        public_path: '/',
+        start_url: './',
+        id: '/',
+        publicPath: './',
         icons: [
           {
-            src: path.resolve('src/img/icon.png'),
+            src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
             destination: path.join('assets', 'icons'),
           },
@@ -61,13 +65,9 @@ module.exports = () => {
           },
         },
         {
-          test: /\.css$/,
+          test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
-        },
-        {
-          test: /\.(png|svg|jpg|gif)$/,
-          type: 'asset/resource',
-        },
+        }
       ],
     },
   };
