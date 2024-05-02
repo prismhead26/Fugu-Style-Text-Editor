@@ -18,12 +18,40 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest:'src-sw.js',
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+      }),
+      new WebpackPwaManifest({
+        name: 'Budget Tracker',
+      }),
     ],
 
     module: {
+      // Add CSS loaders and babel to webpack.
       rules: [
-        
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.(png|svg|jpg|gif)$/,
+          use: ['file-loader'],
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          use: ['file-loader'],
+        },
       ],
     },
   };
