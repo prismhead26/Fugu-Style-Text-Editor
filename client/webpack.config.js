@@ -24,9 +24,25 @@ module.exports = () => {
       }),
       new HtmlWebpackPlugin({
         template: './src/index.html',
+        title: 'J.A.T.E. PWA',
       }),
       new WebpackPwaManifest({
-        name: 'Budget Tracker',
+        fingerprints: false,
+        inject: true,
+        name: 'J.A.T.E. PWA',
+        short_name: 'J.A.T.E.',
+        description: 'Text Editor PWA',
+        background_color: '#ffffff',
+        theme_color: '#2196f3',
+        start_url: '/',
+        public_path: '/',
+        icons: [
+          {
+            src: path.resolve('src/img/icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
       }),
     ],
 
@@ -38,6 +54,10 @@ module.exports = () => {
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-transform-runtime', '@babel/plugin-proposal-object-rest-spread'],
+            },
           },
         },
         {
@@ -46,11 +66,7 @@ module.exports = () => {
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
-          use: ['file-loader'],
-        },
-        {
-          test: /\.(woff|woff2|eot|ttf|otf)$/,
-          use: ['file-loader'],
+          type: 'asset/resource',
         },
       ],
     },
