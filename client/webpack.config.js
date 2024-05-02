@@ -26,7 +26,7 @@ module.exports = () => {
         swDest:'src-sw.js',
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'index.html'),
+        template: path.resolve(__dirname, './index.html'),
         title: 'J.A.T.E. PWA',
       }),
       new WebpackPwaManifest({
